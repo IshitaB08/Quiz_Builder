@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Quiz Generator</title>
+  
+  <link rel="stylesheet" href="Quiz.css">
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+ 
+</head>
+<body>
+  <!-- Navigation bar -->
+  <nav>
+   <div class="nav-wrapper purple lighten-2 class">
+     <a href="#" class="brand-logo center">Quiz Builder</a>
+   </div>
+ </nav>
+
+ <!-- Main Content -->
+ <div class="container" id="container">
+   <!-- Configue Quiz -->
+   <div class="row" id="quizConfig">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col m6 s12">
+          <input placeholder="1 - 100" id="qTotal" type="number" class="validate">
+          <label for="questions">Number of questions to create</label>
+        </div>
+        </div>
+    </form>
+    <!-- Create questions -->
+    <div class="col s6">
+      <a id="generateBtn" class="waves-effect waves-light pink btn-small">Generate Form</a>
+    </div>
+   </div>
+
+    <!-- Quiz Form -->
+   <div id="formContainer" class="row hide">
+    <form id="quizForm" class="col s12">
+      <!-- Title -->
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <input id="title" placeholder="Enter the question" type="text" class="validate">
+          <label for="question_title">Question Title</label>
+        </div>
+      </div>
+      <!-- User Input 1 -->
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <input id="input1" placeholder="Enter answer" type="text" class="validate">
+          <label>Option A</label>
+        </div>
+      </div>
+      <!-- User Input 2 -->
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <input id="input2" placeholder="Enter answer" type="text" class="validate">
+          <label>Option B</label>
+        </div>
+      </div>
+
+      <!--User Input 3 -->
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <input id="input3" placeholder="Enter answer" type="text" class="validate">
+          <label>Option C</label>
+        </div>
+      </div>
+
+      <!--Correct Answer-->
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <input id="correctValue" placeholder="Enter the correct answer. A,B,C?" type="text" class="validate">
+          <label>Correct Answer</label>
+        </div>
+      </div>
+
+      <div id="filesubmit" class="col s6">
+        <input type="file" class="file-select" accept="image/*"/>
+        <button class="file-submit"><a id="submit">SUBMIT</a></button>
+      </div>
+
+      <!-- Submit Button -->
+      <div id="submitBtn" class="col s6">
+        <a id="submit" class="waves-effect waves-light blue btn-small">Add to bank</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Quiz -->
+  <form id="quiz" class="hide" action="#">
+    <h5 id="qTitle"></h5>
+    <!-- Choice 1 -->
+    <p>
+      <label>
+        <input id="check1" class="with-gap" type="radio" name='choices' value="A"/>
+        <span id="option1"></span>
+      </label>
+    </p>
+    <!-- Choice 2 -->
+    <p>
+      <label>
+        <input id="check2" class="with-gap" type="radio" name='choices' value="B"/>
+        <span id="option2"></span>
+      </label>
+    </p>
+    <!-- Choice 3 -->
+    <p>
+      <label>
+        <input id="check3" class="with-gap" type="radio" name='choices' value="C"/>
+        <span id="option3"></span>
+      </label>
+    </p>
+    <a id="submitAnswer" class="waves-effect waves-light btn-small">Next Question</a>
+  </form>
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script src="Quiz.js"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBeva5JPCHp4Es4EKk6OT8ypQ69OMDGea0",
+    authDomain: "quiz-43a4b.firebaseapp.com",
+    databaseURL: "https://quiz-43a4b.firebaseio.com",
+    projectId: "quiz-43a4b",
+    storageBucket: "",
+    messagingSenderId: "280380586147",
+    appId: "1:280380586147:web:7cab0e994cc00b9c"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  const storageService = firebase.storage();
+  const storageRef = storageService.ref();
+
+  document.querySelector('.file-select).addEventListener('change', handleFileUploadChange);
+  document.querySelector('.file-submit).addEventListener('click', handleFileUploadSubmit);
+
+  let selectedFile;
+  handleFileUploadChange(e) {
+  selectedFile = e.target.files[0];
+  }
+
+  handleFileUploadSubmit(e) {
+  const uploadTask = storageRef.child(`images/${selectedFile.name}`).put(selectedFile); //create a child directory called images, and place the file inside this directory
+  uploadTask.on('state_changed', (snapshot) => {
+  // Observe state change events such as progress, pause, and resume
+  }, (error) => {
+    // Handle unsuccessful uploads
+    console.log(error);
+  }, () => {
+     // Do something once upload is complete
+     console.log('success');
+  });
+}
+</script>
+
+
+</body>
+</html>
