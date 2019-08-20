@@ -4,13 +4,14 @@ document.addEventListener("DOMContentLoaded", function () {
   });
  });
  
-const quiz = document.getElementById('quiz');
-const generateBtn = document.getElementById('generateBtn');
-const quizConfig = document.getElementById('quizConfig');
-
-const form = document.getElementById('quizForm');
-const submit = document.getElementById('submit');
-const submitAnswer = document.getElementById('submitAnswer');
+ const quiz = document.getElementById('quiz');
+ const generateBtn = document.getElementById('generateBtn');
+ const quizConfig = document.getElementById('quizConfig');
+ const qTotal = document.getElementById('qTotal');
+ const total = qTotal.value;
+ const form = document.getElementById('quizForm');
+ const submit = document.getElementById('submit');
+ const submitAnswer = document.getElementById('submitAnswer');
 
 $(document).ready(function () {
   function init() {
@@ -43,6 +44,8 @@ window.localStorage.clear();
 $('#localStorage').get(0).reset();
 });
 
+
+
 // Position Variables
 let pos = 1;
 let quizPos = 1;
@@ -64,8 +67,6 @@ let incorrect = 0;
 // Generate questions & options for quiz
 generateBtn.addEventListener('click', (e) => {
   // Check input fields have value
-  const qTotal = document.getElementById('qTotal');
-  const total = qTotal.value;
   if (qTotal && qTotal.value) {
     clearConfig();
     renderForm();
@@ -105,6 +106,7 @@ submit.addEventListener('click', (e) => {
   renderQuiz();
 
 } else {
+  // Error Handler
   alert('Display error');
   }
 })
