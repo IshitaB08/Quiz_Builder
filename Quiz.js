@@ -13,38 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
  const submit = document.getElementById('submit');
  const submitAnswer = document.getElementById('submitAnswer');
 
-$(document).ready(function () {
-  function init() {
-      if (localStorage["title"]) {
-          $('#title').val(localStorage["title"]);
-      }
-      if (localStorage["input1"]) {
-          $('#input1').val(localStorage["input1"]);
-      }
-      if (localStorage["input2"]) {
-          $('#input2').val(localStorage["input2"]);
-      }
-      if (localStorage["input3"]) {
-          $('#input3').val(localStorage["input3"]);
-      }
-      if (localStorage["correctValue"]) {
-         $('#correctValue').val(localStorage["correctValue"]);
-      }
-      
-  }
-  init();
-});
-
-$('.stored').keyup(function() {
-  localStorage[$(this).attr('name')] = $(this).val();
-});
-
-$('#clear').click(function() {
-window.localStorage.clear();
-$('#localStorage').get(0).reset();
-});
-
-
 
 // Position Variables
 let pos = 1;
@@ -197,4 +165,69 @@ function checkAnswer() {
       })
     }
 
-    
+    // Get the text field that we're going to track
+let field = document.getElementById("input2");
+let field1 = document.getElementById("input1");
+let field3 = document.getElementById("input3"); 
+let field4 = document.getElementById("title"); 
+let field5 = document.getElementById("correctValue"); 
+
+
+// See if we have an autosave value
+// (this will only happen if the page is accidentally refreshed)
+if (sessionStorage.getItem("autosave")) {
+  // Restore the contents of the text field
+  field.value = sessionStorage.getItem("autosave");
+ }
+
+
+if (sessionStorage.getItem("autosave1")) {
+  field1.value = sessionStorage.getItem("autosave1");
+ 
+}
+
+
+if (sessionStorage.getItem("autosave2")) {
+  
+  field3.value = sessionStorage.getItem("autosave2");
+
+}
+
+if (sessionStorage.getItem("autosave3")) {
+  
+  field4.value = sessionStorage.getItem("autosave3");
+
+}
+
+if (sessionStorage.getItem("autosave4")) {
+  
+  field5.value = sessionStorage.getItem("autosave4");
+
+}
+
+ field1.addEventListener("change", function() {
+   // And save the results into the session storage object
+   sessionStorage.setItem("autosave1", field1.value);
+ });
+
+ field3.addEventListener("change", function() {
+   // And save the results into the session storage object
+   sessionStorage.setItem("autosave2", field3.value);
+ });
+
+// Listen for changes in the text field
+field.addEventListener("change", function() {
+  // And save the results into the session storage object
+  sessionStorage.setItem("autosave", field.value);
+});
+
+field4.addEventListener("change", function() {
+  // And save the results into the session storage object
+  sessionStorage.setItem("autosave3", field4.value);
+});
+
+field5.addEventListener("change", function() {
+  // And save the results into the session storage object
+  sessionStorage.setItem("autosave4", field5.value);
+});
+   
